@@ -22,11 +22,8 @@ function setup(){
 }
 
 function draw(){
-    background(0)
-
     l1.draw()
 
     p.draw()
     p.update()
-    
 }   

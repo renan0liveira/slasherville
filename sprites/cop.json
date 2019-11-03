@@ -159,5 +159,42 @@
                 }
             }
         ]
+    },
+    "idle-down": {
+        "unique-frame": true,
+        "frame": {
+            "x": 4,
+            "y": 0,
+            "w": 23,
+            "h": 31
+        }
+    },
+    "idle-up": {
+        "unique-frame": true,
+        "frame": {
+            "x": 4,
+            "y": 128,
+            "w": 23,
+            "h": 31
+        }
+    },
+    "idle-left": {
+        "unique-frame": true,
+        "frame": {
+            "x": 4,
+            "y": 64,
+            "w": 23,
+            "h": 31
+        }
+    },
+    "idle-right": {
+        "unique-frame": true,
+        "fliph": true,
+        "frame": {
+            "x": 4,
+            "y": 64,
+            "w": 23,
+            "h": 31
+        }
     }
 }

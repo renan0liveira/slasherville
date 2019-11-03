@@ -9,13 +9,13 @@ class Level extends Scene{
         this.map = loadImage(`maps/${map}.png`)
         this.data = loadJSON(`maps/${map}.json`)
 
-        this.walls = []
+        this.bodies = []
         this.doors = []
     }
 
     loadObjects(){
-        this.data.collisions.forEach((c) => {
-            this.walls.push(new Body(c.x, c.y, c.w, c.h))
+        this.data.objects.forEach((c) => {
+            this.bodies.push(new Wall(c.x, c.y, c.w, c.h))
         })
 
         // TODO: criar classe door que carregará outra scene jogo
