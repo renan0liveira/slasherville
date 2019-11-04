@@ -1,6 +1,6 @@
 class Sprite{
 
-    constructor(name, x, y, /*speed,*/ w, h){
+    constructor(name, x, y, w, h){
         this.spritedata = loadJSON(`sprites/${name}.json`)
         this.spritesheet = loadImage(`sprites/${name}.png`)
 

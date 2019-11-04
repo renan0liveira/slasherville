@@ -18,7 +18,8 @@ function setup(){
     angleMode(DEGREES)
 
     l1.loadObjects()
-    p.loadAnimations()
+
+    p.prepareAnimations()
 }
 
 function draw(){

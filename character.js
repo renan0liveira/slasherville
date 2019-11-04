@@ -1,10 +1,21 @@
-class Player extends Sprite{
+class Player{
 
     constructor(name, x, y, w, h, level){
-        super(name, x, y, w, h)
+
+        this.sprite = new Sprite(name, x, y, w, h)
+
         this.level = level
 
+        this.x = x
+        this.y = y
+        this.w = w
+        this.h = h
+
         this.knife = loadImage('itens/knife.png')
+    }
+
+    prepareAnimations(){
+        this.sprite.loadAnimations()
     }
 
     update(){
@@ -14,20 +25,20 @@ class Player extends Sprite{
         if(keyIsDown(90)){
 
             push()
-            if(this.currAnim == 'walkleft' || this.currAnim == 'idle-left'){
+            if(this.sprite.currAnim == 'walkleft' || this.sprite.currAnim == 'idle-left'){
                 translate(this.x - this.w/2 - 10, this.y)
                 rotate(-90)
                 image(this.knife, 0, 0, 20, 40)
             }
-            else if(this.currAnim == 'walkright' || this.currAnim == 'idle-right'){
+            else if(this.sprite.currAnim == 'walkright' || this.sprite.currAnim == 'idle-right'){
                 translate(this.x + this.w/2 + 10, this.y)
                 rotate(90)
                 image(this.knife, 0, 0, 20, 40)
             }
-            else if(this.currAnim == 'walkup' || this.currAnim == 'idle-up'){
+            else if(this.sprite.currAnim == 'walkup' || this.sprite.currAnim == 'idle-up'){
                 image(this.knife, this.x, this.y - this.h/2 - 10, 20, 40)
             }
-            else if(this.currAnim == 'walkdown' || this.currAnim == 'idle-down'){
+            else if(this.sprite.currAnim == 'walkdown' || this.sprite.currAnim == 'idle-down'){
                 scale(1, -1)
                 image(this.knife, this.x, -1 * this.y - this.h/2 + 10, 20, 40)
             }
@@ -35,33 +46,33 @@ class Player extends Sprite{
 
         }else{
             if(keyIsDown(LEFT_ARROW)){
-                this.setAnimation('walkleft')
+                this.sprite.setAnimation('walkleft')
                 fx = this.x - 0.2 * deltaTime
             }
             else if(keyIsDown(RIGHT_ARROW)){
-                this.setAnimation('walkright')
+                this.sprite.setAnimation('walkright')
                 fx = this.x + 0.2 * deltaTime
             }
             else if(keyIsDown(UP_ARROW)){
-                this.setAnimation('walkup')
+                this.sprite.setAnimation('walkup')
                 fy = this.y - 0.2 * deltaTime
             }
             else if(keyIsDown(DOWN_ARROW)){
-                this.setAnimation('walkdown')
+                this.sprite.setAnimation('walkdown')
                 fy = this.y + 0.2 * deltaTime
             }
             else{
-                if(this.currAnim == 'walkleft')
-                    this.setAnimation('idle-left')
+                if(this.sprite.currAnim == 'walkleft')
+                    this.sprite.setAnimation('idle-left')
 
-                if(this.currAnim == 'walkright')
-                    this.setAnimation('idle-right')
+                if(this.sprite.currAnim == 'walkright')
+                    this.sprite.setAnimation('idle-right')
 
-                if(this.currAnim == 'walkup')
-                    this.setAnimation('idle-up')
+                if(this.sprite.currAnim == 'walkup')
+                    this.sprite.setAnimation('idle-up')
 
-                if(this.currAnim == 'walkdown')
-                    this.setAnimation('idle-down')
+                if(this.sprite.currAnim == 'walkdown')
+                    this.sprite.setAnimation('idle-down')
             }
         }
 
@@ -110,8 +121,11 @@ class Player extends Sprite{
     }
 
     draw(){
-        this.show()
-        this.animate()
+        this.sprite.x = this.x
+        this.sprite.y = this.y
+
+        this.sprite.show()
+        this.sprite.animate()
     }
 
 }
