@@ -14,10 +14,6 @@ class Player{
         this.knife = loadImage('itens/knife.png')
     }
 
-    prepareAnimations(){
-        this.sprite.loadAnimations()
-    }
-
     update(){
         let fx = this.x
         let fy = this.y

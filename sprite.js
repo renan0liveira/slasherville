@@ -1,8 +1,11 @@
 class Sprite{
 
     constructor(name, x, y, w, h){
-        this.spritedata = loadJSON(`sprites/${name}.json`)
-        this.spritesheet = loadImage(`sprites/${name}.png`)
+        loadImage(`sprites/${name}.png`, i =>{
+            syncJSON(`sprites/${name}.json`, j => {
+                this.loadAnimations(JSON.parse(j), i)
+            })
+        })
 
         this.x = x
         this.y = y
@@ -19,27 +22,25 @@ class Sprite{
     // TODO: Criar um método fazer com que uma animação se torne do tipo idle quando o personagem estiver parado
     // atualmente utilizo as animações 'unique-frame' para fazer isso, mas o ideal é que a classe Sprite faça de maneira mais inteligente
     // de modo que eu não precise ficar avaliando a atual animação do personagem para para-lo na direção certa
-    loadAnimations(){
-        const animationNames = Object.keys(this.spritedata)
+    loadAnimations(j, i){
+        const animationNames = Object.keys(j)
 
         for(const a of animationNames){
             this.animationData[a] = []
 
-            if(this.spritedata[a]['unique-frame']){
-                const f =  this.spritedata[a]['frame']
-                this.animations[a] = this.spritesheet.get(f.x, f.y, f.w, f.h)
+            if(j[a]['unique-frame']){
+                const f =  j[a]['frame']
+                this.animations[a] = i.get(f.x, f.y, f.w, f.h)
                 this.animationData[a].push('unique-frame')
             }else{
-                this.animations[a] = this.spritedata[a]['frames'].map(f =>{
-                    return this.spritesheet.get(f.position.x, f.position.y, f.position.w, f.position.h)
+                this.animations[a] = j[a]['frames'].map(f =>{
+                    return i.get(f.position.x, f.position.y, f.position.w, f.position.h)
                 })
             }
 
-            if(this.spritedata[a]['fliph'])
+            if(j[a]['fliph'])
                 this.animationData[a].push('fliph')
         }
-        delete this.spritedata
-        delete this.spritesheet
 
         this.index = 0
         this.currAnim = Object.keys(this.animations)[0]

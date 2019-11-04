@@ -4,18 +4,11 @@ class Enemy extends Body{
         super(x, y, w, h)
 
         this.sprite = new Sprite(name, x, y, w, h)
-        //this.sprite.loadAnimations()
-        this.drawable = false
-    }
-
-    update(){
     }
 
     draw(){
-        if(this.drawable){
-            this.sprite.show()
-            this.sprite.animate()
-        }
+        this.sprite.show()
+        this.sprite.animate()
     }
     
 }
