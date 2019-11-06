@@ -29,42 +29,63 @@ class Player{
 
             push()
             if(this.sprite.currAnim == 'walkleft' || this.sprite.currAnim == 'idle-left'){
-                this.knifeBounds = [
-                    {
-                        x: this.x - this.w/2 - 10 - 20,
-                        y: this.y - 10
-                    },
-                    {
-                        x: this.x - this.w/2 - 10 + 20 ,
-                        y: this.y + 10
-                    }
-                ]
-                
+                // this.knifeBounds = [
+                //     {
+                //         x: this.x - this.w/2 - 10 - 20,
+                //         y: this.y - 10
+                //     },
+                //     {
+                //         x: this.x - this.w/2 - 10 + 20 ,
+                //         y: this.y + 10
+                //     }
+                // ]
+
+                this.knifeBounds = {
+                    x: this.x - this.w/2 - 10,
+                    y: this.y,
+                    w: 40,
+                    h: 20
+                }
+
                 translate(this.x - this.w/2 - 10, this.y)
                 rotate(-90)
                 image(this.knife, 0, 0, 20, 40)
-
-                stroke('green')
-                strokeWeight(10)
-                point(0,0)
             }
             else if(this.sprite.currAnim == 'walkright' || this.sprite.currAnim == 'idle-right'){
-                this.knifeBounds = null
+
+                this.knifeBounds = {
+                    x: this.x + this.w/2 + 10,
+                    y: this.y,
+                    w: 40,
+                    h: 20
+                }
 
                 translate(this.x + this.w/2 + 10, this.y)
                 rotate(90)
                 image(this.knife, 0, 0, 20, 40)
             }
             else if(this.sprite.currAnim == 'walkup' || this.sprite.currAnim == 'idle-up'){
-                this.knifeBounds = null
+
+                this.knifeBounds = {
+                    x: this.x,
+                    y: this.y - this.h/2 - 10,
+                    w: 20,
+                    h: 40
+                }
 
                 image(this.knife, this.x, this.y - this.h/2 - 10, 20, 40)
             }
             else if(this.sprite.currAnim == 'walkdown' || this.sprite.currAnim == 'idle-down'){
-                this.knifeBounds = null
+                
+                this.knifeBounds = {
+                    x: this.x,
+                    y: this.y + this.h/2 + 10,
+                    w: 20,
+                    h: 40
+                }
 
                 scale(1, -1)
-                image(this.knife, this.x, -1 * this.y - this.h/2 + 10, 20, 40)
+                image(this.knife, this.x, -1 * this.y - this.h/2 - 10, 20, 40)
             }
             pop()
 
@@ -153,10 +174,7 @@ class Player{
         this.sprite.y = this.y
 
         if(this.knifeBounds != null){
-            stroke('red')
-            strokeWeight(5)
-            point(this.knifeBounds[0].x, this.knifeBounds[0].y)
-            point(this.knifeBounds[1].x, this.knifeBounds[1].y)
+            rect(this.knifeBounds.x ,this.knifeBounds.y ,this.knifeBounds.w ,this.knifeBounds.h)
         }
 
         this.sprite.show()
