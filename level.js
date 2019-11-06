@@ -9,7 +9,6 @@ class Level extends Scene{
         this.map = loadImage(`maps/${map}.png`)
 
         this.bodies = []
-        this.enemies = []
         this.doors = []
 
         syncJSON(`maps/${map}.json`, j => {
@@ -23,7 +22,7 @@ class Level extends Scene{
         })
 
         j['enemies'].forEach(e => {
-            this.enemies.push(new Enemy(e.x, e.y, e.w, e.h, 'zombie_01'))
+            this.bodies.push(new Enemy(e.x, e.y, e.w, e.h, 'zombie_01'))
         })
 
         // TODO: criar classe door que carregará outra scene jogo
@@ -46,8 +45,8 @@ class Level extends Scene{
         //     rect(d.position.x, d.position.y, d.position.w, d.position.h)
         // })
 
-        this.enemies.forEach(e => {
-            e.draw()
+        this.bodies.forEach(b => {
+            b.draw()
         })
     }
 }

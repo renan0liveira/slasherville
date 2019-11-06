@@ -6,4 +6,6 @@ class Body{
         this.w = w
         this.h = h
     }
+
+    draw(){}
 }
