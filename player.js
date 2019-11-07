@@ -12,11 +12,12 @@ class Player{
         this.h = h
 
         // knife size = {w: 20, h:40}
+        // TODO: knife also has to be a object that inherits from body, 
+        // this way its collisions could be checked independently
         this.knife = loadImage('itens/knife.png')
 
         // improvisation done for the damage system of this game in particular won't be in a actual game engine
         // TODO: create a collidableObject class or interface to make code more structured
-        this.doingDamage = false
         this.knifeBounds = null
     }
 
@@ -29,16 +30,6 @@ class Player{
 
             push()
             if(this.sprite.currAnim == 'walkleft' || this.sprite.currAnim == 'idle-left'){
-                // this.knifeBounds = [
-                //     {
-                //         x: this.x - this.w/2 - 10 - 20,
-                //         y: this.y - 10
-                //     },
-                //     {
-                //         x: this.x - this.w/2 - 10 + 20 ,
-                //         y: this.y + 10
-                //     }
-                // ]
 
                 this.knifeBounds = {
                     x: this.x - this.w/2 - 10,
@@ -90,7 +81,7 @@ class Player{
             pop()
 
         }else{
-            this.doingDamage = false
+            this.knifeBounds = null
 
             if(keyIsDown(LEFT_ARROW)){
                 this.sprite.setAnimation('walkleft')
@@ -124,33 +115,30 @@ class Player{
         }
 
         for(const obj of this.level.bodies){
+            const col = obj.checkCollision(this)
+            
+            if(col){
+                if(obj.constructor.name  == 'Wall'){
+                    
+                    // horizontal collision
+                    if(col.dx < col.dy){
 
-            // fazer verificação de colisões
-            const dx = Math.abs(this.x - obj.x) - (this.w/2 + obj.w/2)
-            const dy = Math.abs(this.y - obj.y) - (this.h/2 + obj.h/2)
-
-            if(dx < 0 && dy < 0){
-
-                if(obj.constructor.name == 'Wall'){
-
-                    // colisão horizontal
-                    if(Math.abs(dx) < Math.abs(dy)){
-
-                        // caso o player esteja a esquerda do objeto
+                        // player is to the left
                         if (this.x < obj.x){
                             fx = obj.x - obj.w/2 - this.w/2
-                        // caso esteja a direita
+                        // player is to the right
                         }else{
                             fx = obj.x + obj.w/2 + this.w/2
                         }
 
-                    // colisão vertical
-                    }else if(Math.abs(dy) < Math.abs(dx)){
-                        
-                        // caso o player esteja acima do objeto
+                    }
+                    // vertical collision
+                    else if (col.dy < col.dx){
+
+                        // player is above
                         if (this.y < obj.y){
                             fy = obj.y - obj.h/2 - this.h/2
-                        // caso esteja abaixo
+                        // player is below
                         }else{
                             fy = obj.y + obj.h/2 + this.h/2
                         }
@@ -158,10 +146,9 @@ class Player{
                     }
 
                 }
-                else if(obj.constructor.name == 'Enemy'){
-                    console.log('ai')
+                else if(obj.constructor.name  == 'Enemy'){
+                    console.log('you were hit')
                 }
-
             }
         }
 
