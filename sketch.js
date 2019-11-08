@@ -31,8 +31,9 @@ function setup(){
 }
 
 function draw(){
+    l1.update()
     l1.draw()
 
-    p.draw()
     p.update()
+    p.draw()
 }   

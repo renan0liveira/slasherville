@@ -11,6 +11,8 @@ class Level extends Scene{
         this.bodies = []
         this.doors = []
 
+        this.tempObjs = []
+
         syncJSON(`maps/${map}.json`, j => {
             this.loadObjects(JSON.parse(j))
         })
@@ -32,6 +34,17 @@ class Level extends Scene{
         })
     }
 
+    update(){
+        this.bodies.forEach((b, index, arr) => {
+            if(b.constructor.name  == 'Enemy'){
+                const status = b.status()
+                if(status.health <= 0){
+                    arr.splice(index, 1)
+                }
+            }
+        })
+    }
+
     draw(){
         image(this.map, this.w/2, this.h/2, this.w, this.h)
 
@@ -45,8 +58,31 @@ class Level extends Scene{
         //     rect(d.position.x, d.position.y, d.position.w, d.position.h)
         // })
 
-        this.bodies.forEach(b => {
-            b.draw()
+        this.bodies.forEach(b => b.draw())
+
+        this.tempObjs.forEach((t, index, arr) => {
+            push()
+
+            if(t.scale){
+                scale(t.scale.x, t.scale.y)
+                image(t.sprite, t.x, t.y, t.w, t.h)
+            }else{
+                translate(t.x, t.y)
+                if(t.rotation) rotate(t.rotation)
+                image(t.sprite, 0, 0, t.w, t.h)
+            }
+            
+            pop()
+
+            if(t.counter >= t.time)
+                arr.splice(index,1)
+            else
+                t.counter += deltaTime
         })
+    }
+
+    showObject(props){
+        props['counter'] = 0
+        this.tempObjs.push(props)
     }
 }

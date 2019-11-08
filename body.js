@@ -17,8 +17,5 @@ class Body{
             return {dx: -dx, dy: -dy}
     }
 
-    static checkCollision(body1, doby2){
-    }
-
     draw(){}
 }

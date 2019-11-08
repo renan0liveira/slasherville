@@ -1,7 +1,7 @@
-class Player{
+class Player extends Body{
 
     constructor(name, x, y, w, h, level){
-
+        super(x, y, w, h)
         this.sprite = new Sprite(name, x, y, w, h)
 
         this.level = level
@@ -15,106 +15,136 @@ class Player{
         // TODO: knife also has to be a object that inherits from body, 
         // this way its collisions could be checked independently
         this.knife = loadImage('itens/knife.png')
-
-        // improvisation done for the damage system of this game in particular won't be in a actual game engine
-        // TODO: create a collidableObject class or interface to make code more structured
-        this.knifeBounds = null
+        this.knifeCooldown = 1000
+        this.knifeTimer = 0
+        this.knifeStregth = 10
     }
 
     update(){
+        this.knifeTimer += deltaTime
+
         let fx = this.x
         let fy = this.y
+        let knifeBounds = null
 
         if(keyIsDown(90)){
-            this.doingDamage = true
 
-            push()
-            if(this.sprite.currAnim == 'walkleft' || this.sprite.currAnim == 'idle-left'){
+            if(this.knifeTimer >= this.knifeCooldown){
 
-                this.knifeBounds = {
-                    x: this.x - this.w/2 - 10,
-                    y: this.y,
-                    w: 40,
-                    h: 20
+                if(this.sprite.currAnim == 'walkleft' || this.sprite.currAnim == 'idle-left'){
+    
+                    knifeBounds = {
+                        x: this.x - this.w/2 - 10,
+                        y: this.y,
+                        w: 40,
+                        h: 20
+                    }
+    
+                    this.level.showObject({
+                        sprite: this.knife,
+                        x: this.x - this.w/2 - 10,
+                        y: this.y,
+                        w: 20,
+                        h: 40,
+                        time: 500,
+                        rotation: -90
+                    })
+                }
+                else if(this.sprite.currAnim == 'walkright' || this.sprite.currAnim == 'idle-right'){
+    
+                    knifeBounds = {
+                        x: this.x + this.w/2 + 10,
+                        y: this.y,
+                        w: 40,
+                        h: 20
+                    }
+
+                    this.level.showObject({
+                        sprite: this.knife,
+                        x: this.x + this.w/2 + 10,
+                        y: this.y,
+                        w: 20,
+                        h: 40,
+                        time: 500,
+                        rotation: 90
+                    })
+                }
+                else if(this.sprite.currAnim == 'walkup' || this.sprite.currAnim == 'idle-up'){
+    
+                    knifeBounds = {
+                        x: this.x,
+                        y: this.y - this.h/2 - 10,
+                        w: 20,
+                        h: 40
+                    }
+
+                    this.level.showObject({
+                        sprite: this.knife,
+                        x: this.x,
+                        y: this.y - this.h/2 - 10,
+                        w: 20,
+                        h: 40,
+                        time: 500
+                    })
+                }
+                else if(this.sprite.currAnim == 'walkdown' || this.sprite.currAnim == 'idle-down'){
+                    
+                    knifeBounds = {
+                        x: this.x,
+                        y: this.y + this.h/2 + 10,
+                        w: 20,
+                        h: 40
+                    }
+
+                    this.level.showObject({
+                        sprite: this.knife,
+                        x: this.x,
+                        y: -1 * this.y - this.h/2 - 10,
+                        w: 20,
+                        h: 40,
+                        scale: {x: 1, y: -1},
+                        time: 500
+                    })
+                    // scale(1, -1)
+                    // image(this.knife, this.x, -1 * this.y - this.h/2 - 10, 20, 40)
                 }
 
-                translate(this.x - this.w/2 - 10, this.y)
-                rotate(-90)
-                image(this.knife, 0, 0, 20, 40)
+                this.knifeTimer = 0
             }
-            else if(this.sprite.currAnim == 'walkright' || this.sprite.currAnim == 'idle-right'){
 
-                this.knifeBounds = {
-                    x: this.x + this.w/2 + 10,
-                    y: this.y,
-                    w: 40,
-                    h: 20
-                }
-
-                translate(this.x + this.w/2 + 10, this.y)
-                rotate(90)
-                image(this.knife, 0, 0, 20, 40)
-            }
-            else if(this.sprite.currAnim == 'walkup' || this.sprite.currAnim == 'idle-up'){
-
-                this.knifeBounds = {
-                    x: this.x,
-                    y: this.y - this.h/2 - 10,
-                    w: 20,
-                    h: 40
-                }
-
-                image(this.knife, this.x, this.y - this.h/2 - 10, 20, 40)
-            }
-            else if(this.sprite.currAnim == 'walkdown' || this.sprite.currAnim == 'idle-down'){
-                
-                this.knifeBounds = {
-                    x: this.x,
-                    y: this.y + this.h/2 + 10,
-                    w: 20,
-                    h: 40
-                }
-
-                scale(1, -1)
-                image(this.knife, this.x, -1 * this.y - this.h/2 - 10, 20, 40)
-            }
-            pop()
-
-        }else{
-            this.knifeBounds = null
-
-            if(keyIsDown(LEFT_ARROW)){
-                this.sprite.setAnimation('walkleft')
-                fx = this.x - 0.2 * deltaTime
-            }
-            else if(keyIsDown(RIGHT_ARROW)){
-                this.sprite.setAnimation('walkright')
-                fx = this.x + 0.2 * deltaTime
-            }
-            else if(keyIsDown(UP_ARROW)){
-                this.sprite.setAnimation('walkup')
-                fy = this.y - 0.2 * deltaTime
-            }
-            else if(keyIsDown(DOWN_ARROW)){
-                this.sprite.setAnimation('walkdown')
-                fy = this.y + 0.2 * deltaTime
-            }
-            else{
-                if(this.sprite.currAnim == 'walkleft')
-                    this.sprite.setAnimation('idle-left')
-
-                if(this.sprite.currAnim == 'walkright')
-                    this.sprite.setAnimation('idle-right')
-
-                if(this.sprite.currAnim == 'walkup')
-                    this.sprite.setAnimation('idle-up')
-
-                if(this.sprite.currAnim == 'walkdown')
-                    this.sprite.setAnimation('idle-down')
-            }
         }
 
-        for(const obj of this.level.bodies){
+        if(keyIsDown(LEFT_ARROW)){
+            this.sprite.setAnimation('walkleft')
+            fx = this.x - 0.2 * deltaTime
+        }
+        else if(keyIsDown(RIGHT_ARROW)){
+            this.sprite.setAnimation('walkright')
+            fx = this.x + 0.2 * deltaTime
+        }
+        else if(keyIsDown(UP_ARROW)){
+            this.sprite.setAnimation('walkup')
+            fy = this.y - 0.2 * deltaTime
+        }
+        else if(keyIsDown(DOWN_ARROW)){
+            this.sprite.setAnimation('walkdown')
+            fy = this.y + 0.2 * deltaTime
+        }
+        else{
+            if(this.sprite.currAnim == 'walkleft')
+                this.sprite.setAnimation('idle-left')
+
+            if(this.sprite.currAnim == 'walkright')
+                this.sprite.setAnimation('idle-right')
+
+            if(this.sprite.currAnim == 'walkup')
+                this.sprite.setAnimation('idle-up')
+
+            if(this.sprite.currAnim == 'walkdown')
+                this.sprite.setAnimation('idle-down')
+        }
+
+        this.level.bodies.forEach(obj => {
             const col = obj.checkCollision(this)
             
             if(col){
@@ -150,7 +180,17 @@ class Player{
                     console.log('you were hit')
                 }
             }
-        }
+
+            if(knifeBounds){
+                const knifeCol = obj.checkCollision(knifeBounds)
+
+                if(knifeCol && obj.constructor.name  == 'Enemy'){
+                    obj.takeDamage(this.knifeStregth)
+                }
+            }
+            
+            
+        })
 
         this.x = fx
         this.y = fy
@@ -159,10 +199,6 @@ class Player{
     draw(){
         this.sprite.x = this.x
         this.sprite.y = this.y
-
-        if(this.knifeBounds != null){
-            rect(this.knifeBounds.x ,this.knifeBounds.y ,this.knifeBounds.w ,this.knifeBounds.h)
-        }
 
         this.sprite.show()
         this.sprite.animate()

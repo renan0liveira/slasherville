@@ -4,6 +4,15 @@ class Enemy extends Body{
         super(x, y, w, h)
 
         this.sprite = new Sprite(name, x, y, w, h)
+        this.health = 30
+    }
+
+    takeDamage(damage){
+        this.health -= damage
+    }
+
+    status(){
+        return {health: this.health}
     }
 
     draw(){
