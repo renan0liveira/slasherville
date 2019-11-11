@@ -10,24 +10,25 @@ class Enemy extends Body{
         this.strength = 25
     }
 
-    takeDamage(damage){
-        this.health -= damage
-    }
-
-    status(){
-        return {health: this.health}
-    }
-
     update(){
         const col = this.checkCollision(game.player)
         if(col){
             console.log('i\'m hitting the player')
+            game.player.takeDamage(this.strength)
         }
     }
 
     draw(){
         this.sprite.show()
         this.sprite.animate()
+    }
+
+    status(){
+        return {health: this.health}
+    }
+
+    takeDamage(damage){
+        this.health -= damage
     }
     
 }

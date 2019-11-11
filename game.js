@@ -15,39 +15,36 @@ class Game extends Scene{
 
         this.tempObjs = []
 
-        syncJSON(`maps/${map}.json`, j => {
-            this.loadObjects(JSON.parse(j))
-        })
+        syncJSON(`maps/${map}.json`, j => this.loadObjects(JSON.parse(j)))
     }
 
     loadObjects(j){
-        j['objects'].forEach(c => {
-            this.bodies.push(new Wall(c.x, c.y, c.w, c.h))
-        })
+        j['objects'].forEach(c => this.bodies.push(new Wall(c.x, c.y, c.w, c.h)))
 
-        j['enemies'].forEach(e => {
-            this.bodies.push(new Enemy(e.x, e.y, e.w, e.h, 'zombie_01'))
-        })
+        j['enemies'].forEach(e => this.bodies.push(new Enemy(e.x, e.y, e.w, e.h, 'zombie_01')))
 
         // TODO: criar classe door que carregará outra scene jogo
         // scenes podem ser levels que são jogáveis ou scripts que têm comportamento predefinido
-        j.doors.forEach(d => {
-            this.doors.push({name: 'newDoor', position: d.position})
-        })
+        j.doors.forEach(d => this.doors.push({name: 'newDoor', position: d.position}))
     }
 
     update(){
         this.bodies.forEach((b, index, arr) => {
             if(b.constructor.name  == 'Enemy'){
                 const status = b.status()
-                if(status.health <= 0){
+                if(status['health'] <= 0)
                     arr.splice(index, 1)
-                }
                 b.update()
             }
         })
 
-        this.player.update()
+        const pStatus = this.player.status()
+        if(pStatus['health'] <= 0){
+            console.log('the player is dead')
+            delete this.player
+        }
+        else
+            this.player.update()
     }
 
     draw(){

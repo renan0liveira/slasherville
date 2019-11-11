@@ -14,6 +14,10 @@ function syncJSON(file, callback){
     rawFile.send(null)
 }
 
+function autodestruct(obj){
+    delete obj
+}
+
 function preload(){
     game = new Game(sW, sH, 'room_01')
 }

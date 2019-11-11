@@ -18,12 +18,16 @@ class Player extends Body{
         // this way its collisions could be checked independently
         this.knife = loadImage('itens/knife.png')
         this.knifeCooldown = 1000
-        this.knifeTimer = 0
+        this.knifeTimer = new Timer(this.knifeCooldown)
         this.knifeStregth = 10
     }
 
+    status(){
+        return {healt: this.health}
+    }
+
     update(){
-        this.knifeTimer += deltaTime
+        this.knifeTimer.tick()
 
         let fx = this.x
         let fy = this.y
@@ -31,7 +35,7 @@ class Player extends Body{
 
         if(keyIsDown(90)){
 
-            if(this.knifeTimer >= this.knifeCooldown){
+            if(this.knifeTimer.run()){
 
                 if(this.sprite.currAnim == 'walkleft' || this.sprite.currAnim == 'idle-left'){
     
@@ -111,7 +115,6 @@ class Player extends Body{
                     // image(this.knife, this.x, -1 * this.y - this.h/2 - 10, 20, 40)
                 }
 
-                this.knifeTimer = 0
             }
 
         }
@@ -182,11 +185,9 @@ class Player extends Body{
             if(knifeBounds){
                 const knifeCol = obj.checkCollision(knifeBounds)
 
-                if(knifeCol && obj.constructor.name  == 'Enemy'){
+                if(knifeCol && obj.constructor.name  == 'Enemy')
                     obj.takeDamage(this.knifeStregth)
-                }
             }
-            
             
         })
 
@@ -200,6 +201,14 @@ class Player extends Body{
 
         this.sprite.show()
         this.sprite.animate()
+    }
+
+    status(){
+        return {health: this.health}
+    }
+
+    takeDamage(damage){
+        this.health -= damage
     }
 
 }
