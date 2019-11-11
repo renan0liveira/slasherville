@@ -1,15 +1,17 @@
 class Player extends Body{
 
-    constructor(name, x, y, w, h, level){
+    constructor(name, x, y, w, h){
         super(x, y, w, h)
         this.sprite = new Sprite(name, x, y, w, h)
-
-        this.level = level
 
         this.x = x
         this.y = y
         this.w = w
         this.h = h
+
+        this.health = 100
+        this.damageCouldown = 500
+        this.damageTimer = 0
 
         // knife size = {w: 20, h:40}
         // TODO: knife also has to be a object that inherits from body, 
@@ -40,7 +42,7 @@ class Player extends Body{
                         h: 20
                     }
     
-                    this.level.showObject({
+                    game.showObject({
                         sprite: this.knife,
                         x: this.x - this.w/2 - 10,
                         y: this.y,
@@ -59,7 +61,7 @@ class Player extends Body{
                         h: 20
                     }
 
-                    this.level.showObject({
+                    game.showObject({
                         sprite: this.knife,
                         x: this.x + this.w/2 + 10,
                         y: this.y,
@@ -78,7 +80,7 @@ class Player extends Body{
                         h: 40
                     }
 
-                    this.level.showObject({
+                    game.showObject({
                         sprite: this.knife,
                         x: this.x,
                         y: this.y - this.h/2 - 10,
@@ -96,7 +98,7 @@ class Player extends Body{
                         h: 40
                     }
 
-                    this.level.showObject({
+                    game.showObject({
                         sprite: this.knife,
                         x: this.x,
                         y: -1 * this.y - this.h/2 - 10,
@@ -144,7 +146,7 @@ class Player extends Body{
                 this.sprite.setAnimation('idle-down')
         }
 
-        this.level.bodies.forEach(obj => {
+        game.bodies.forEach(obj => {
             const col = obj.checkCollision(this)
             
             if(col){
@@ -174,10 +176,6 @@ class Player extends Body{
                         }
 
                     }
-
-                }
-                else if(obj.constructor.name  == 'Enemy'){
-                    console.log('you were hit')
                 }
             }
 

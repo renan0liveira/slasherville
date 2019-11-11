@@ -1,4 +1,4 @@
-class Level extends Scene{
+class Game extends Scene{
 
     constructor(w, h, map){
         super()
@@ -7,6 +7,8 @@ class Level extends Scene{
         this.h = h
 
         this.map = loadImage(`maps/${map}.png`)
+
+        this.player = new Player('cop', 258, 863, 46, 62)
 
         this.bodies = []
         this.doors = []
@@ -41,8 +43,11 @@ class Level extends Scene{
                 if(status.health <= 0){
                     arr.splice(index, 1)
                 }
+                b.update()
             }
         })
+
+        this.player.update()
     }
 
     draw(){
@@ -79,6 +84,8 @@ class Level extends Scene{
             else
                 t.counter += deltaTime
         })
+
+        this.player.draw()
     }
 
     showObject(props){

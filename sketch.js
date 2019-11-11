@@ -1,6 +1,4 @@
-let spritesheet
-let spritedata
-
+let game
 const sW = 1024
 const sH = 896
 
@@ -17,8 +15,7 @@ function syncJSON(file, callback){
 }
 
 function preload(){
-    l1 = new Level(sW, sH, 'room_01')
-    p = new Player('cop', 258, 863, 46, 62, l1)
+    game = new Game(sW, sH, 'room_01')
 }
 
 // (512, 448) * 2
@@ -31,9 +28,6 @@ function setup(){
 }
 
 function draw(){
-    l1.update()
-    l1.draw()
-
-    p.update()
-    p.draw()
+    game.update()
+    game.draw()
 }   
