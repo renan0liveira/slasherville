@@ -16,7 +16,7 @@ class Player extends Body{
         // knife size = {w: 20, h:40}
         // TODO: knife also has to be a object that inherits from body, 
         // this way its collisions could be checked independently
-        this.knife = loadImage('itens/knife.png')
+        this.knife = loadImage('assets/knife.png')
         this.knifeCooldown = 1000
         this.knifeTimer = new Timer(this.knifeCooldown)
         this.knifeStregth = 10

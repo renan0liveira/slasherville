@@ -19,7 +19,7 @@ function autodestruct(obj){
 }
 
 function preload(){
-    game = new Game('room_01')
+    game = new Game('main_menu')
 }
 
 // (512, 448) * 2
