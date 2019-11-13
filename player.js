@@ -46,7 +46,7 @@ class Player extends Body{
                         h: 20
                     }
     
-                    game.showObject({
+                    game.scene.showObject({
                         sprite: this.knife,
                         x: this.x - this.w/2 - 10,
                         y: this.y,
@@ -65,7 +65,7 @@ class Player extends Body{
                         h: 20
                     }
 
-                    game.showObject({
+                    game.scene.showObject({
                         sprite: this.knife,
                         x: this.x + this.w/2 + 10,
                         y: this.y,
@@ -84,7 +84,7 @@ class Player extends Body{
                         h: 40
                     }
 
-                    game.showObject({
+                    game.scene.showObject({
                         sprite: this.knife,
                         x: this.x,
                         y: this.y - this.h/2 - 10,
@@ -102,7 +102,7 @@ class Player extends Body{
                         h: 40
                     }
 
-                    game.showObject({
+                    game.scene.showObject({
                         sprite: this.knife,
                         x: this.x,
                         y: -1 * this.y - this.h/2 - 10,
@@ -149,7 +149,7 @@ class Player extends Body{
                 this.sprite.setAnimation('idle-down')
         }
 
-        game.bodies.forEach(obj => {
+        game.scene.bodies.forEach(obj => {
             const col = obj.checkCollision(this)
             
             if(col){

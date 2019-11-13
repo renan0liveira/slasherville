@@ -1,4 +1,6 @@
 {
+    "name": "room_01",
+    "type": "Level",
     "objects": [
         {
             "type": "wall",

@@ -1,6 +1,6 @@
 let game
-const sW = 1024
-const sH = 896
+const w = 1024
+const h = 896
 
 function syncJSON(file, callback){
     const rawFile = new XMLHttpRequest()
@@ -19,12 +19,12 @@ function autodestruct(obj){
 }
 
 function preload(){
-    game = new Game(sW, sH, 'room_01')
+    game = new Game('room_01')
 }
 
 // (512, 448) * 2
 function setup(){
-    createCanvas(sW, sH)
+    createCanvas(w, h)
     noSmooth()
     imageMode(CENTER)
     rectMode(CENTER)
