@@ -43,6 +43,7 @@ class Sprite{
         }
 
         this.index = 0
+        // currAnim of enemies is null when changing scenes
         this.currAnim = Object.keys(this.animations)[0]
     }
 
