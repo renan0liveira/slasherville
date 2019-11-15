@@ -1,0 +1,5 @@
+{
+    "name": "story",
+    "type": "Slideshow",
+    "slides-array": "storyFrames"
+}

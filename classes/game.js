@@ -13,8 +13,9 @@ class Game{
         this.scene.draw()
     }
 
-    changeScene(){
-        syncJSON(`scenes/room_01.json`, j => this.teste = JSON.parse(j))
-        this.scene = new Level(this.teste)
+    changeScene(sceneName){
+        mouseEventClass = null
+        syncJSON(`scenes/${sceneName}.json`, j => this.nextScene = JSON.parse(j))
+        this.scene = eval(`new ${this.nextScene['type']}(this.nextScene)`)
     }
 }
