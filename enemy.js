@@ -11,10 +11,10 @@ class Enemy extends Body{
     }
 
     update(){
-        const col = this.checkCollision(game.player)
+        const col = this.checkCollision(game.scene.player)
         if(col){
             console.log('i\'m hitting the player')
-            game.player.takeDamage(this.strength)
+            game.scene.player.takeDamage(this.strength)
         }
     }
 

@@ -4,11 +4,6 @@ class Player extends Body{
         super(x, y, w, h)
         this.sprite = new Sprite(name, x, y, w, h)
 
-        this.x = x
-        this.y = y
-        this.w = w
-        this.h = h
-
         this.health = 100
         this.damageCouldown = 500
         this.damageTimer = 0
@@ -20,10 +15,6 @@ class Player extends Body{
         this.knifeCooldown = 1000
         this.knifeTimer = new Timer(this.knifeCooldown)
         this.knifeStregth = 10
-    }
-
-    status(){
-        return {healt: this.health}
     }
 
     update(){

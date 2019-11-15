@@ -1,12 +1,6 @@
 class Sprite{
 
     constructor(name, x, y, w, h){
-        loadImage(`sprites/${name}.png`, i =>{
-            syncJSON(`sprites/${name}.json`, j => {
-                this.loadAnimations(JSON.parse(j), i)
-            })
-        })
-
         this.x = x
         this.y = y
 
@@ -17,6 +11,10 @@ class Sprite{
 
         this.animations = {}
         this.animationData = {}
+
+        syncJSON(`sprites/${name}.json`, j => {
+            this.loadAnimations(JSON.parse(j), sprites[name])
+        })
     }
 
     // TODO: Criar um método fazer com que uma animação se torne do tipo idle quando o personagem estiver parado

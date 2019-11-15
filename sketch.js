@@ -1,4 +1,7 @@
 let game
+
+let sprites = {cop: null, zombie_01: null}
+
 const w = 1024
 const h = 896
 
@@ -15,7 +18,7 @@ function syncJSON(file, callback){
 }
 
 function preload(){
-    game = new Game('main_menu')
+    Object.keys(sprites).forEach(s => sprites[s] = loadImage(`sprites/${s}.png`))
 }
 
 // (512, 448) * 2
@@ -25,9 +28,12 @@ function setup(){
     imageMode(CENTER)
     rectMode(CENTER)
     angleMode(DEGREES)
+    
+    game = new Game('main_menu')
 }
 
 function draw(){
-    game.update()
     game.draw()
+    game.update()
+    
 }   

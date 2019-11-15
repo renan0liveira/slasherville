@@ -1,14 +1,13 @@
 class Level{
     constructor(data){
-
         this.map = loadImage(`scenes/${data['name']}.png`)
+
+        this.player = new Player('cop', 258, 863, 46, 62)
 
         this.bodies = []
         data['objects'].forEach(c => this.bodies.push(new Wall(c.x, c.y, c.w, c.h)))
         data['enemies'].forEach(e => this.bodies.push(new Enemy(e.x, e.y, e.w, e.h, 'zombie_01')))
 
-        // TODO: criar classe door que carregará outra scene jogo
-        // scenes podem ser levels que são jogáveis ou scripts que têm comportamento predefinido
         this.doors = []
         data['doors'].forEach(d => this.doors.push({name: 'newDoor', position: d.position}))
 
@@ -25,13 +24,13 @@ class Level{
             }
         })
 
-        const pStatus = game.player.status()
+        const pStatus = this.player.status()
         if(pStatus['health'] <= 0){
             console.log('the player is dead')
-            delete game.player
+            delete this.player
         }
         else
-            game.player.update()
+            this.player.update()
     }
 
     draw(){
@@ -47,7 +46,9 @@ class Level{
         //     rect(d.position.x, d.position.y, d.position.w, d.position.h)
         // })
 
-        this.bodies.forEach(b => b.draw())
+        this.bodies.forEach(b => {
+            b.draw()
+        })
 
         this.tempObjs.forEach((t, index, arr) => {
             push()
@@ -69,7 +70,7 @@ class Level{
                 t.counter += deltaTime
         })
 
-        game.player.draw()
+        this.player.draw()
     }
 
     showObject(props){
