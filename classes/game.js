@@ -3,7 +3,6 @@ class Game{
     constructor(scene){
         syncJSON(`scenes/${scene}.json`, j => this.sceneData = JSON.parse(j))
         this.scene = eval(`new ${this.sceneData['type']}(this.sceneData)`)
-        this.teste = null
     }
 
     update(){
