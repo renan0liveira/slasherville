@@ -1,6 +1,7 @@
 let game
 
 let sprites = {cop: null, zombie_01: null}
+let music = {theme_01: null}
 let storyFrames = []
 
 let mouseEventClass
@@ -22,7 +23,10 @@ function syncJSON(file, callback){
 
 function preload(){
     Object.keys(sprites).forEach(s => sprites[s] = loadImage(`sprites/${s}.png`))
+    Object.keys(music).forEach(s => music[s] = loadSound(`assets/${s}.mp3`))
     ;['01', '02', '03'].forEach(f => storyFrames.push(loadImage(`assets/story_pt_${f}.png`)))
+
+    userStartAudio()
 }
 
 // (512, 448) * 2
@@ -33,6 +37,7 @@ function setup(){
     rectMode(CENTER)
     angleMode(DEGREES)
     
+    music[Object.keys(music)[0]].loop()
     game = new Game('main_menu')
 }
 
@@ -41,11 +46,7 @@ function draw(){
     game.update()
 }
 
-// function mouseHandler(mouseEventClass) {
-    
-// }
-
 function mouseClicked(){
     if(mouseEventClass)
-    mouseEventClass.mouseEvent()
+        mouseEventClass.mouseEvent()
 }
