@@ -102,8 +102,6 @@ class Player extends Body{
                         scale: {x: 1, y: -1},
                         time: 500
                     })
-                    // scale(1, -1)
-                    // image(this.knife, this.x, -1 * this.y - this.h/2 - 10, 20, 40)
                 }
 
             }

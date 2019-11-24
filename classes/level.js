@@ -36,6 +36,8 @@ class Level{
     draw(){
         image(this.map, w/2, h/2, w, h)
 
+        // Debug code that print the collision bounds
+
         // fill(255, 0, 0)
         // this.bodies.forEach((o) => {
         //     rect(o.x, o.y, o.w, o.h)

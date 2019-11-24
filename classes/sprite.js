@@ -17,9 +17,6 @@ class Sprite{
         })
     }
 
-    // TODO: Criar um método fazer com que uma animação se torne do tipo idle quando o personagem estiver parado
-    // atualmente utilizo as animações 'unique-frame' para fazer isso, mas o ideal é que a classe Sprite faça de maneira mais inteligente
-    // de modo que eu não precise ficar avaliando a atual animação do personagem para para-lo na direção certa
     loadAnimations(j, i){
         const animationNames = Object.keys(j)
 
@@ -41,7 +38,6 @@ class Sprite{
         }
 
         this.index = 0
-        // currAnim of enemies is null when changing scenes
         this.currAnim = Object.keys(this.animations)[0]
     }
 
